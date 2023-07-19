@@ -5,6 +5,10 @@ const port = 3000;
 // Configurar el motor de plantillas
 app.set('view engine', 'ejs');
 
+// Agregar esta línea para configurar la ruta de las vistas
+const path = require('path');
+app.set('views', path.join(__dirname, 'views'));
+
 // Configurar el middleware para manejar datos JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,4 +52,5 @@ app.use(express.urlencoded({ extended: true }));
     app.listen(port, () => {
     console.log(`Servidor web en ejecución en http://localhost:${port}`);
 });
+
 
