@@ -4,15 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplicación de Gestión de Aviones</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="../styles.css">
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     
-    <!-- sweetalert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
-    
-    <h1>Bienvenido(a) a la Aplicación de Gestión de Aviones</h1>
-    <p>Para comenzar, <a href="/aviones">haz clic aquí</a> para ver la lista de aviones.</p>
 
-</body>
-</html>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="/">Aplicación de Gestión de Aviones</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aviones">Ver Lista de Aviones</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/puertas-embarque">Puertas de Embarque</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+    
+        <!-- Carrusel -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/img/Avion.jpg" class="d-block w-100" alt="Avión">
+                </div>
+                <div class="carousel-item">
+                    <img src="/img/Aeropuerto.jpg" class="d-block w-100" alt="Aeropuerto">
+                </div>
+                <div class="carousel-item">
+                    <img src="/img/PuertaEmbarque.jpg" class="d-block w-100" alt="Puerta de Embarque">
+                </div>
+            </div>            
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
+
+
+    
+
+    
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JS -->
+<script src="/public/main.js"></script>
+    </body>
+    </html>

@@ -5,52 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puertas de Embarque</title>
 
-    <!-- sweetalert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- CSS -->
+<link rel="stylesheet" href="../styles.css">
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
 
 </head>
 <body>
-    
-    <h1>Puertas de Embarque</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Número de Puerta</th>
-                <th>Disponible</th>
-                <th>Avión Asignado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% puertasEmbarque.forEach(puerta => { %>
-            <tr>
-                <td><%= puerta.numero %></td>
-                <td><%= puerta.disponible ? 'Sí' : 'No' %></td>
-                <td>
-                    <% if (puerta.avionAsignado) { %>
-                    <%= `${puerta.avionAsignado.registro} - ${puerta.avionAsignado.aerolinea}` %>
-                    <% } else { %>
-                    Sin asignar
-                    <% } %>
-                </td>
-                <td>
-                    <% if (puerta.disponible) { %>
-                    <form class="asignar-form" action="/puertas-embarque/asignar" method="POST">
-                        <input type="hidden" name="puertaEmbarque" value="<%= puerta.numero %>">
-                        <button type="submit">Asignar Avión</button>
-                    </form>
-                    <% } else { %>
-                    <form class="desasignar-form" action="/puertas-embarque/desasignar" method="POST">
-                        <input type="hidden" name="puertaEmbarque" value="<%= puerta.numero %>">
-                        <button type="submit">Desasignar Avión</button>
-                    </form>
-                    <% } %>
-                </td>
-            </tr>
-            <% }) %>
-        </tbody>
-    </table>
 
+    <!-- Navbar -->
+    <%- include('navbar') %>
+
+    
+    <div class="container">
+        <h1>Puertas de Embarque</h1>
+    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Número de Puerta</th>
+                    <th scope="col">Disponibilidad</th>
+                    <th scope="col">Avión Asignado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% puertasEmbarque.forEach(puerta => { %>
+                <tr>
+                    <td><%= puerta.numero %></td>
+                    <td><%= puerta.disponible ? 'Disponible' : 'Asignado' %></td>
+                    <td>
+                        <% if (puerta.avionAsignado) { %>
+                        <%= `${puerta.avionAsignado.registro} - ${puerta.avionAsignado.aerolinea}` %>
+                        <% } else { %>
+                        Sin asignar
+                        <% } %>
+                    </td>
+                    <td>
+                        <% if (puerta.disponible) { %>
+                        <form class="asignar-form" action="/puertas-embarque/asignar" method="POST">
+                            <input type="hidden" name="puertaEmbarque" value="<%= puerta.numero %>">
+                            <button type="submit" class="btn btn-primary">Asignar Avión</button>
+                        </form>
+                        <% } else { %>
+                        <form class="desasignar-form" action="/puertas-embarque/desasignar" method="POST">
+                            <input type="hidden" name="puertaEmbarque" value="<%= puerta.numero %>">
+                            <button type="submit" class="btn btn-danger">Desasignar Avión</button>
+                        </form>
+                        <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JS -->
     <script src="/public/main.js"></script>
-</body>
-</html>
+    </body>
+    </html>
