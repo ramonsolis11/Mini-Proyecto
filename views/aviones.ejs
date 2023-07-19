@@ -4,33 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Aviones</title>
+
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
-        
-        <h1>Lista de Aviones</h1>
+    
+    <h1>Lista de Aviones</h1>
+
+    <h2>Filtrar Aviones</h2>
+    <label for="searchInput">Buscar:</label>
+    <input type="text" id="searchInput" placeholder="Ingrese un término de búsqueda">
+
+    <label for="filterSelect">Filtrar por Aerolínea:</label>
+    <select id="filterSelect">
+        <option value="all">Todas</option>
+        <option value="Airline 1">Airline 1</option>
+        <option value="Airline 2">Airline 2</option>
+        <option value="Airline 3">Airline 3</option>
+    </select>
 
     <h2>Aviones existentes</h2>
-    <ul>
-        <% aviones.forEach(avion => { %>
-        <li>
-            Número de Registro: <%= avion.registro %>, Aerolínea: <%= avion.aerolinea %>,
-            Capacidad: <%= avion.capacidad %>, Estado: <%= avion.estado %>
-        </li>
-        <% }) %>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Número de Registro</th>
+                <th>Aerolínea</th>
+                <th>Capacidad</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody id="avionesContainer">
+            <% aviones.forEach(avion => { %>
+            <tr>
+                <td><%= avion.registro %></td>
+                <td><%= avion.aerolinea %></td>
+                <td><%= avion.capacidad %></td>
+                <td><%= avion.estado %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
 
     <h2>Agregar un nuevo avión</h2>
     <form method="POST" action="/aviones">
-        <label>Número de Registro: </label>
+        <label>Número de Registro:</label>
         <input type="text" name="registro" required><br>
 
-        <label>Aerolínea: </label>
+        <label>Aerolínea:</label>
         <input type="text" name="aerolinea" required><br>
 
-        <label>Capacidad: </label>
+        <label>Capacidad:</label>
         <input type="number" name="capacidad" required><br>
 
-        <label>Estado: </label>
+        <label>Estado:</label>
         <input type="text" name="estado" required><br>
 
         <button type="submit">Agregar Avión</button>
@@ -38,11 +66,16 @@
 
     <h2>Eliminar un avión</h2>
     <form method="POST" action="/aviones/delete">
-        <label>Número de Registro: </label>
+        <label>Número de Registro:</label>
         <input type="text" name="registro" required><br>
 
         <button type="submit">Eliminar Avión</button>
     </form>
+    <br>
 
+    <a href="http://localhost:3000/puertas-embarque" class="btn">Ir a Puertas de Embarque</a>
+
+
+    <script src="/public/main.js"></script>
 </body>
 </html>

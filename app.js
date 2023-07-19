@@ -5,16 +5,8 @@ const port = 3000;
 // Configurar el motor de plantillas
 app.set('view engine', 'ejs');
 
-// Agregar esta línea para configurar la ruta de las vistas
-const path = require('path');
-app.set('views', path.join(__dirname, 'views'));
-
-// Configurar el middleware para manejar datos JSON
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // Ruta principal
-    app.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.render('index');
     });
 
@@ -30,27 +22,20 @@ app.use(express.urlencoded({ extended: true }));
     res.render('aviones', { aviones });
     });
 
-    // Ruta para agregar un avión
-    app.post('/aviones', (req, res) => {
-    // Obtener los datos enviados desde el formulario
-    const { registro, aerolinea, capacidad, estado } = req.body;
+    // Ruta para mostrar puertas de embarque
+    app.get('/puertas-embarque', (req, res) => {
+    // Obtener las puertas de embarque disponibles y ocupadas desde una fuente de datos (p. ej., un arreglo)
+    const puertasEmbarque = [
+        { numero: 'A1', disponible: true, avionAsignado: null },
+        { numero: 'A2', disponible: false, avionAsignado: { registro: 'AB123', aerolinea: 'Airline 1' } },
+        { numero: 'B1', disponible: true, avionAsignado: null },
+        { numero: 'B2', disponible: false, avionAsignado: { registro: 'CD456', aerolinea: 'Airline 2' } },
+    ];
 
-    // Aquí puedes realizar la lógica de creación del avión
-
-    res.redirect('/aviones');
-    });
-
-    // Ruta para eliminar un avión
-    app.post('/aviones/delete', (req, res) => {
-    const registro = req.body.registro;
-
-    // Aquí puedes realizar la lógica de eliminación del avión
-
-    res.redirect('/aviones');
+    res.render('puertasEmbarque', { puertasEmbarque });
     });
 
     app.listen(port, () => {
     console.log(`Servidor web en ejecución en http://localhost:${port}`);
 });
-
 

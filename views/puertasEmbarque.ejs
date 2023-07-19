@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puertas de Embarque</title>
+
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+    
+    <h1>Puertas de Embarque</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Número de Puerta</th>
+                <th>Disponible</th>
+                <th>Avión Asignado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% puertasEmbarque.forEach(puerta => { %>
+            <tr>
+                <td><%= puerta.numero %></td>
+                <td><%= puerta.disponible ? 'Sí' : 'No' %></td>
+                <td>
+                    <% if (puerta.avionAsignado) { %>
+                    <%= `${puerta.avionAsignado.registro} - ${puerta.avionAsignado.aerolinea}` %>
+                    <% } else { %>
+                    Sin asignar
+                    <% } %>
+                </td>
+                <td>
+                    <% if (puerta.disponible) { %>
+                    <form class="asignar-form" action="/puertas-embarque/asignar" method="POST">
+                        <input type="hidden" name="puertaEmbarque" value="<%= puerta.numero %>">
+                        <button type="submit">Asignar Avión</button>
+                    </form>
+                    <% } else { %>
+                    <form class="desasignar-form" action="/puertas-embarque/desasignar" method="POST">
+                        <input type="hidden" name="puertaEmbarque" value="<%= puerta.numero %>">
+                        <button type="submit">Desasignar Avión</button>
+                    </form>
+                    <% } %>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <script src="/public/main.js"></script>
+</body>
+</html>
