@@ -1,22 +1,55 @@
-// controllers/avionesController.js
-
 // Importar el modelo de Avion
-const Avion = require('../models/Avion');
+import Avion from '../public/Avion';
+
+const Avion = require('../public/Avion');
+
+// Array para almacenar los aviones en memoria
+const aviones = [];
 
 // Función de controlador para la ruta /aviones
 const obtenerAviones = (req, res) => {
-    // Obtener aviones desde una fuente de datos (p. ej., una base de datos)
-    const aviones = [
-        { registro: 'AB123', aerolinea: 'Airline 1', capacidad: 150, estado: 'disponible' },
-        { registro: 'CD456', aerolinea: 'Airline 2', capacidad: 200, estado: 'en mantenimiento' },
-        { registro: 'EF789', aerolinea: 'Airline 3', capacidad: 180, estado: 'en vuelo' }
-    ];
-
-    // Renderizar la vista aviones con los datos de los aviones
+    // Renderizar la vista aviones con los datos de los aviones almacenados en memoria
     res.render('aviones', { aviones });
+    
 };
 
-// Exportar la función del controlador
-module.exports = {
-    obtenerAviones
+// Función de controlador para agregar un nuevo avión
+const agregarAvion = (req, res) => {
+    const { registro, aerolinea, capacidad, estado } = req.body;
+
+    // Crear una instancia del avión
+    const avion = new Avion(registro, aerolinea, parseInt(capacidad), estado);
+
+    // Agregar el avión al array en memoria
+    aviones.push(avion);
+
+    // Redireccionar a la página de aviones
+    res.redirect('/aviones');
 };
+
+// Función de controlador para eliminar un avión por número de registro
+const eliminarAvion = (req, res) => {
+    const { registro } = req.body;
+
+
+    // Encontrar el índice del avión en el array en memoria
+    const avionIndex = aviones.findIndex(avion => avion.registro === registro);
+
+
+    // Si se encontró el avión, eliminarlo del array en memoria
+    if (avionIndex !== -1) {
+        aviones.splice(avionIndex, 1);
+        
+    }
+
+    // Redireccionar a la página de aviones
+    res.redirect('/aviones');
+};
+
+// Exportar las funciones del controlador
+module.exports = {
+    obtenerAviones,
+    agregarAvion,
+    eliminarAvion
+};
+

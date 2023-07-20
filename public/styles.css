@@ -168,5 +168,41 @@ input[type="submit"]:hover {
   pointer-events: none;
 }
 
+/* Estilos para el footer */
+.footer {
+  background-color: #f8f9fa; /* Fondo del footer */
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.footer p {
+  margin-bottom: 0;
+}
+
+.footer a {
+  color: #007bff; /* Color del enlace */
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.footer ul li:last-child {
+  margin-right: 0;
+}
+
+
 
 

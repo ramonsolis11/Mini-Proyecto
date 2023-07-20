@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Aviones</title>
+    
 
 <!-- CSS -->
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="/styles.css">
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -19,7 +20,7 @@
 
 <!-- Agregar un avión -->
 <h2>Agregar un nuevo avión</h2>
-<form class="formulario" method="POST" action="/aviones" id="agregarAvionForm">
+<form class="formulario" method="POST" action="/aviones" id="agregarAvionForm" onsubmit="return validarFormulario()">
     <div class="mb-3">
         <label for="registroInput" class="form-label">Número de Registro:</label>
         <input type="text" class="form-control" id="registroInput" name="registro" required>
@@ -31,6 +32,19 @@
     </div>
 
     <div class="mb-3">
+        <label for="puertaEmbarqueInput" class="form-label">Puerta de Embarque:</label>
+        <select id="puertaEmbarqueInput" name="puertaEmbarque">
+            <option value="">Seleccionar puerta de embarque</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B1">B1</option>
+            <option value="B2">B2</option>
+            <option value="C1">C1</option>
+            <option value="C2">C2</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
         <label for="capacidadInput" class="form-label">Capacidad de Pasajeros:</label>
         <input type="number" class="form-control" id="capacidadInput" name="capacidad" required>
     </div>
@@ -38,21 +52,15 @@
     <div class="mb-3">
         <label class="form-label">Estado:</label>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="enVuelo" id="enVueloCheckbox">
+            <input class="form-check-input" type="checkbox" value="on" name="enVuelo" id="enVueloCheckbox">
             <label class="form-check-label" for="enVueloCheckbox">
                 En Vuelo
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="enMantenimiento" id="enMantenimientoCheckbox">
+            <input class="form-check-input" type="checkbox" value="on" name="enMantenimiento" id="enMantenimientoCheckbox">
             <label class="form-check-label" for="enMantenimientoCheckbox">
                 En Mantenimiento
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="enPuertaEmbarque" id="enPuertaEmbarqueCheckbox">
-            <label class="form-check-label" for="enPuertaEmbarqueCheckbox">
-                En Puerta de Embarque
             </label>
         </div>
     </div>
@@ -69,10 +77,10 @@
         <tr>
             <th scope="col">Número de Registro</th>
             <th scope="col">Aerolínea</th>
+            <th scope="col">Puerta de Embarque</th>
             <th scope="col">Capacidad de Pasajeros</th>
             <th scope="col">En Vuelo</th>
             <th scope="col">En Mantenimiento</th>
-            <th scope="col">En Puerta de Embarque</th>
             <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -81,10 +89,10 @@
         <tr>
             <td><%= avion.registro %></td>
             <td><%= avion.aerolinea %></td>
+            <td><%= avion.puertaEmbarque %></td>
             <td><%= avion.capacidad %></td>
             <td><%= avion.enVuelo ? 'Sí' : 'No' %></td>
             <td><%= avion.enMantenimiento ? 'Sí' : 'No' %></td>
-            <td><%= avion.enPuertaEmbarque ? 'Sí' : 'No' %></td>
             <td>
                 <form method="POST" action="/aviones/delete">
                     <input type="hidden" name="registro" value="<%= avion.registro %>">
@@ -96,54 +104,11 @@
     </tbody>
 </table>
 
-<!-- Filtrar Aviones -->
-<h2>Filtrar Aviones</h2>
-<div class="mb-3">
-    <label for="registroInput" class="form-label">Número de Registro:</label>
-    <input type="text" class="form-control" id="registroInput" placeholder="Ingrese un número de registro">
-</div>
-
-<div class="mb-3">
-    <label for="aerolineaInput" class="form-label">Aerolínea:</label>
-    <input type="text" class="form-control" id="aerolineaInput" placeholder="Ingrese una aerolínea">
-</div>
-
-<div class="mb-3">
-    <label for="enVueloCheckbox" class="form-label">En Vuelo:</label>
-    <input type="checkbox" class="form-check-input" id="enVueloCheckbox">
-</div>
-
-<div class="mb-3">
-    <label for="enMantenimientoCheckbox" class="form-label">En Mantenimiento:</label>
-    <input type="checkbox" class="form-check-input" id="enMantenimientoCheckbox">
-</div>
-
-<div class="mb-3">
-    <label for="enPuertaEmbarqueCheckbox" class="form-label">En Puerta de Embarque:</label>
-    <input type="checkbox" class="form-check-input" id="enPuertaEmbarqueCheckbox">
-</div>
-
-<button id="filtrarButton" class="btn btn-primary">Filtrar</button>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Número de Registro</th>
-            <th scope="col">Aerolínea</th>
-            <th scope="col">Capacidad de Pasajeros</th>
-            <th scope="col">En Vuelo</th>
-            <th scope="col">En Mantenimiento</th>
-            <th scope="col">En Puerta de Embarque</th>
-        </tr>
-    </thead>
-    <tbody id="filteredAvionesContainer"></tbody>
-</table>
-
 <!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- JS -->
-<script src="/public/main.js"></script>
-<script src="/models/Avion.js"></script>
+<script src="/main.js"></script>
+<script src="/Avion.js"></script>
 </body>
 </html>

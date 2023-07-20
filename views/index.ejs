@@ -6,7 +6,7 @@
     <title>Aplicación de Gestión de Aviones</title>
 
 <!-- CSS -->
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="/styles.css">
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -15,6 +15,7 @@
 </head>
 <body>
 
+    <header>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
@@ -39,7 +40,6 @@
         </div>
     </nav>
 
-    
         <!-- Carrusel -->
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <ol class="carousel-indicators">
@@ -67,15 +67,48 @@
                 <span class="visually-hidden">Next</span>
             </a>
         </div>
+    </header>
 
+    <main>
+        <div class="container">
+            <h1>Aplicación de Gestión de Aviones</h1>
+            <p>Esta es una aplicación de gestión de aviones que permite:</p>
+            <ul>
+                <li>Ver la lista de aviones</li>
+                <li>Ver la lista de puertas de embarque</li>
+                <li>Asignar un avión a una puerta de embarque</li>
+                <li>Desasignar un avión de una puerta de embarque</li>
+            </ul>
+        </div>
+    </main>
 
+    <footer class="footer">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="text-muted mb-0">Desarrollado por <a href="#">Ramon Solis</a></p>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="#">Inicio</a></li>
+                        <li class="list-inline-item"><a href="#">Acerca de nosotros</a></li>
+                        <li class="list-inline-item"><a href="#">Servicios</a></li>
+                        <li class="list-inline-item"><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
     
 
     
+
 <!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- JS -->
-<script src="/public/main.js"></script>
-    </body>
-    </html>
+<script src="/main.js"></script>
+<script src="/Avion.js"></script>
+</body>
+</html>
+
