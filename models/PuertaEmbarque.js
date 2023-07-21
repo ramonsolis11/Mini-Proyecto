@@ -8,7 +8,7 @@ class PuertaEmbarque {
         asignarAvion(avion) {
         if (this.disponible) {
             this.avionAsignado = avion;
-            this.disponible = false;
+            this.disponible = true;
             avion.asignarPuertaEmbarque(this);
         }
         }
@@ -22,9 +22,9 @@ class PuertaEmbarque {
         }
     }
 
-    // Agrega métodos adicionales según sea necesario para la gestión de puertas de embarque
-    
-    
+    getNumero() {
+        return this.numero;
+    }
 }
 
 module.exports = PuertaEmbarque;

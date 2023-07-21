@@ -1,114 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Aviones</title>
-    
+    <title>Aplicación de Gestión de Aviones</title>
 
-<!-- CSS -->
-<link rel="stylesheet" href="/styles.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/styles.css">
 
-<!-- Bootstrap -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <script src="/app.js"></script>
 </head>
+
 <body>
 
-<!-- Navbar -->
-<%- include('navbar') %>
+    <!-- Navbar -->
+    <%- include('navbar') %>
 
-<!-- Agregar un avión -->
-<h2>Agregar un nuevo avión</h2>
-<form class="formulario" method="POST" action="/aviones" id="agregarAvionForm" onsubmit="return validarFormulario()">
-    <div class="mb-3">
-        <label for="registroInput" class="form-label">Número de Registro:</label>
-        <input type="text" class="form-control" id="registroInput" name="registro" required>
+    <!-- Agregar un avión -->
+    <div class="container mt-5">
+        <h2>Agregar un nuevo avión</h2>
+        <form class="formulario" method="POST" action="/aviones" id="agregarAvionForm" onsubmit="return validarFormulario()">
+            <div class="mb-3">
+                <label for="registroInput" class="form-label">Número de Registro:</label>
+                <input type="text" class="form-control" id="registroInput" name="registro" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="aerolineaInput" class="form-label">Aerolínea:</label>
+                <input type="text" class="form-control" id="aerolineaInput" name="aerolinea" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="puertaEmbarqueInput" class="form-label">Puerta de Embarque:</label>
+                <select class="form-select" id="puertaEmbarqueInput" name="puertaEmbarque">
+                    <option value="">Seleccionar puerta de embarque</option>
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="capacidadInput" class="form-label">Capacidad de Pasajeros:</label>
+                <input type="number" class="form-control" id="capacidadInput" name="capacidad" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Estado:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="on" name="enVuelo" id="enVueloCheckbox">
+                    <label class="form-check-label" for="enVueloCheckbox">
+                        En Vuelo
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="on" name="enMantenimiento"
+                        id="enMantenimientoCheckbox">
+                    <label class="form-check-label" for="enMantenimientoCheckbox">
+                        En Mantenimiento
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Agregar Avión</button>
+        </form>
     </div>
 
-    <div class="mb-3">
-        <label for="aerolineaInput" class="form-label">Aerolínea:</label>
-        <input type="text" class="form-control" id="aerolineaInput" name="aerolinea" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="puertaEmbarqueInput" class="form-label">Puerta de Embarque:</label>
-        <select id="puertaEmbarqueInput" name="puertaEmbarque">
-            <option value="">Seleccionar puerta de embarque</option>
-            <option value="A1">A1</option>
-            <option value="A2">A2</option>
-            <option value="B1">B1</option>
-            <option value="B2">B2</option>
-            <option value="C1">C1</option>
-            <option value="C2">C2</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="capacidadInput" class="form-label">Capacidad de Pasajeros:</label>
-        <input type="number" class="form-control" id="capacidadInput" name="capacidad" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Estado:</label>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="on" name="enVuelo" id="enVueloCheckbox">
-            <label class="form-check-label" for="enVueloCheckbox">
-                En Vuelo
-            </label>
+    <!-- Aviones Existentes -->
+    <div class="container mt-5">
+        <h2>Aviones Existentes</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Número de Registro</th>
+                        <th scope="col">Aerolínea</th>
+                        <th scope="col">Puerta de Embarque</th>
+                        <th scope="col">Capacidad de Pasajeros</th>
+                        <th scope="col">En Vuelo</th>
+                        <th scope="col">En Mantenimiento</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="avionesContainer">
+                    <% aviones.forEach(avion => { %>
+                    <tr>
+                        <td><%= avion.registro %></td>
+                        <td><%= avion.aerolinea %></td>
+                        <td><%= avion.puertaEmbarque %></td>
+                        <td><%= avion.capacidad %></td>
+                        <td><%= avion.enVuelo ? 'Sí' : 'No' %></td>
+                        <td><%= avion.enMantenimiento ? 'Sí' : 'No' %></td>
+                        <td>
+                            <form method="POST" action="/aviones/delete">
+                                <input type="hidden" name="registro" value="<%= avion.registro %>">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="on" name="enMantenimiento" id="enMantenimientoCheckbox">
-            <label class="form-check-label" for="enMantenimientoCheckbox">
-                En Mantenimiento
-            </label>
-        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Agregar Avión</button>
-</form>
+    <!-- Footer -->
+    <footer id="footer" class="mt-5">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>Gestión de Aviones</h3>
+                        <p>
+                            <strong>Phone:</strong> +1 714-123-456<br>
+                            <strong>Email:</strong> gestiondeaviones@.com<br>
+                            <strong>Address:</strong> Pennsylvania Av, Washington DC<br>
+                        </p>
+                    </div>
 
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Otros Servicios</h4>
+                        <ul>
+                            <li><a href="i">Inicio</a></li>
+                            <li><a href="#">Lista de Aviones</a></li>
+                            <li><a href="#">Puerta Embarque</a></li>
+                            <li><a href="#">Terms of service</a></li>
+                            <li><a href="#">Privacy policey</a></li>
+                        </ul>
+                    </div>
 
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Nuestras Redes Sociales</h4>
+                        <div class="socail-links mt-2">
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="float-lg-left">© Copyright <strong><span>Gestión de Aviones</span></strong>.
+                        All Rights Reserved</p>
+                </div>
+                <div class="col-lg-6">
+                    <p class="float-lg-right">Designed by <a href="#">MonDev</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-<!-- Aviones Existentes -->
-<h2>Aviones Existentes</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Número de Registro</th>
-            <th scope="col">Aerolínea</th>
-            <th scope="col">Puerta de Embarque</th>
-            <th scope="col">Capacidad de Pasajeros</th>
-            <th scope="col">En Vuelo</th>
-            <th scope="col">En Mantenimiento</th>
-            <th scope="col">Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="avionesContainer">
-        <% aviones.forEach(avion => { %>
-        <tr>
-            <td><%= avion.registro %></td>
-            <td><%= avion.aerolinea %></td>
-            <td><%= avion.puertaEmbarque %></td>
-            <td><%= avion.capacidad %></td>
-            <td><%= avion.enVuelo ? 'Sí' : 'No' %></td>
-            <td><%= avion.enMantenimiento ? 'Sí' : 'No' %></td>
-            <td>
-                <form method="POST" action="/aviones/delete">
-                    <input type="hidden" name="registro" value="<%= avion.registro %>">
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                </form>
-            </td>
-        </tr>
-        <% }) %>
-    </tbody>
-</table>
+    <a href="#" class="arrow"><i><img src="/img/arrow.png" alt=""></i></a>
 
-<!-- Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JS -->
-<script src="/main.js"></script>
-<script src="/Avion.js"></script>
+    <!-- JS -->
+    <script src="/app.js"></script>
 </body>
 </html>
